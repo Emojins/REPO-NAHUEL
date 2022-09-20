@@ -1,4 +1,4 @@
-const { getTasks, postTask, putTask, deleteTask } = require('../controllers/tasks.controller');
+const { getTasks, postTask, putTask, deleteTask } = require('../controllers/task');
 
 
 const TaskRouter = require('express').Router();

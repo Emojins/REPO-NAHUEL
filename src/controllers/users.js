@@ -1,10 +1,10 @@
 
 // importamos el modelo de User
-const User = require("../models/USERS");
+const User = require("../models/users");
 // iniciamos el controlador user como object
 const CtrlUser = {};
 
-CtrlUser.getUsers = async (req, res) => {
+CtrlUser.getUser = async (req, res) => {
     const users = await User.find();
 
     return res.json({
