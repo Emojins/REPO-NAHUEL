@@ -1,18 +1,41 @@
-const express = require('express')
-const app = express()
-const path= require("path")
-app.use(express.json())
+// Importaciones de librerías
+const express = require('express');
+const cors = require("cors");
+const morgan = require("morgan");
+const path = require("path");
 
 
-const dbConnect = require('./src/db/connection');
+// Conexión a la base de datos
+const connectDB = require('./src/db/connection');
 
-app.use(require("./src/routes/routes"))
-app.use(express.static(path.join(__dirname, 'src/public/img')));
+connectDB()
 
+// Se inicializa la librería 
 
-dbConnect();
-
-
-app.listen(4000, ()=> {console.log("Servidor corriendo en puerto 4000")})
+const app = express();
 
 
+
+// Configuraciones
+const port = process.env.PORT || 4000;
+
+// Middlewares
+app.use(cors());
+
+app.use(morgan("combined"));
+
+app.use(express.json());
+
+// Recursos estáticos
+
+app.use(express.static(path.join(__dirname,'public')));
+
+// Rutas
+
+app.use(require("./src/routes/user.routes"));//ruta de usuarios
+app.use(require("./src/routes/tasks.routes"));//ruta de tareas
+
+
+
+// Iniciar servidor
+app.listen(port, console.log(`Servidor iniciado en: http://localhost:${port}`))
