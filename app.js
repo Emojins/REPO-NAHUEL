@@ -26,9 +26,6 @@ app.use(morgan("combined"));
 
 app.use(express.json());
 
-// Recursos estáticos
-
-app.use(express.static(path.join(__dirname,'public')));
 
 // Rutas
 

@@ -1,13 +1,8 @@
 const { Schema, model } = require("mongoose");
 
-const TaskSchema = new Schema(
-    {
-        id:{
-            type:Number
-        },
+const TaskSchema = new Schema({
         nombre:{
-            type:String,
-            required:true
+            type:String
         },
         motivo:{
             type:String,
