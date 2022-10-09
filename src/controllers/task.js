@@ -15,15 +15,13 @@ ctrlTask.getTasks = async (req, res) => {
     )
 }
 ctrlTask.postTask = async (req, res) => {
-    const {id,nombre, motivo, fecha, estado} = req.body;
+    const {title, description, isActive} = req.body;
 
     const newTask = new TaskModel(
         {
-            id,
-            nombre,
-            motivo,
-            fecha,
-            estado
+            title,
+            description,
+            isActive
         }
     );
 
@@ -41,25 +39,24 @@ ctrlTask.postTask = async (req, res) => {
 ctrlTask.putTask = async (req, res) => {
     try {
         const id_task =  req.params['idTask'];
-        const {nombre, motivo, fecha, estado} = req.body;
+        const {title, description, isActive} = req.body;
         const TaskAmodificar = 
             {
-                nombre,
-                motivo,
-                fecha,
-                estado
+                title,
+                description,
+                isActive
             };
             
         const TaskModificada = await TaskModel.findByIdAndUpdate(id_task, TaskAmodificar);
         return res.json(
             {
-                message: "REQ PUT",
+                message: "Tarea modificada:",
                 id_task,
                 TaskModificada
             }
         )
     } catch (error) {
-        res.status(404).send(`La id Buscada puede que no exista en la DB: ${error}`)
+        res.status(404).send(`No se encuentra el ID: ${error}`)
     }
 }
 

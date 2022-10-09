@@ -1,21 +1,20 @@
-const { Schema, model } = require("mongoose");
+const { model, Schema } = require("mongoose");
 
 const TaskSchema = new Schema({
-        nombre:{
-            type:String
-        },
-        motivo:{
+        title:{
             type:String,
-            max:300
+            require: true
         },
-        fecha:{
-            type:Date,
-            default:new Date()
+        description:{
+            type:String,
+            require:true
         },
-        estado:{
-            type:Number,
-            max:3,
-            default:1
+        isActive:{
+            type:Boolean,
+            default:true
+        },
+        userId: {
+            type: Schema.Types.ObjectId, ref: 'Users'
         }
     },
     {

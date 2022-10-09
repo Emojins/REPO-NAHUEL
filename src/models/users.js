@@ -1,10 +1,11 @@
 const {Schema, model} = require("mongoose");
 
 const UserSchema = new Schema({
-    name:{
+    username:{
         type: String,
         min: 4,
-        max:50
+        max:50,
+        unique:true
     },
     password:{
         type:String,
@@ -14,15 +15,29 @@ const UserSchema = new Schema({
     },
     email:{
         type:String,
+        required:true,
+        unique:true
+    },
+    edad:{
+        type: Number,
         required:true
     },
-    active:{
+    isActive:{
         type:Boolean,
         default:true
-    }
+    },
+
 },{
     versionKey:false,
-    timestamps:true
 })
+//requerimos el modelo y lo importamos a un objeto
+/* UserSchema.methods.toJSON = function() {
+    const { password, _id, ...user } = this.toObject();
+    user.uid = _id;
+
+    return user;
+}
+ */
+
 
 module.exports = model("Users", UserSchema)

@@ -1,6 +1,9 @@
 
 // importamos el modelo de User
 const User = require("../models/users");
+//importamos el paquete bcrypt
+const bcrypt = require('bcrypt');
+const token = require("../helpers/generarJWT").uid
 // iniciamos el controlador user como object
 const CtrlUser = {};
 
@@ -14,36 +17,48 @@ CtrlUser.getUser = async (req, res) => {
 }
 
 CtrlUser.postUser = async (req, res) => {
-    const {name, password, email} = req.body;
+    const { username, password:passwordRecibida, edad, email } = req.body;
+    
+    // Encriptar la contraseña del usuario
+    const newPassword = bcrypt.hashSync(passwordRecibida, 10);
 
+    // Se instancia un nuevo documento de MongoDB para luego ser guardado
     const newUser = new User({
-        name,
-        password,
+        username,
+        password: newPassword,
+        edad,
         email
-    })
+    });
+
 
     const user = await newUser.save();
 
     return res.json({
-        message: "Usuario creador correctamente.",
-        user
+        message: "Usuario creado correctamente.",
+        user,
+        token
     })
 }
 
-CtrlUser.putUser = async (req, res) => {
-    try {
-        const id_user =  req.params['idUser'];
-        const userMod = await User.findByIdAndUpdate(id_user, UserAMod);
+CtrlUser.putUser = async (req, res)=>{
+    const {username, edad} = req.body;
+
+    const id_User = req.params['uid'];
+
+    const updateUser = await User.updateOne({id_User},
+        {$set: {
+            username, 
+            edad
+         }
+        })
+    
         return res.json(
             {
-                message: "REQ PUT",
-                id_user,
-                userMod
+                message: "Usuario modificado correctamente",
+                id_User,
+                updateUser
             }
         )
-    } catch (error) {
-        res.status(404).send(`El usuario buscado puede que no exista en la DB: ${error}`)
-    }
 }
 
 CtrlUser.deleteUser = async (req, res) => {
@@ -52,7 +67,7 @@ CtrlUser.deleteUser = async (req, res) => {
         User.findByIdAndDelete(id_User).exec()
         return res.json(
             {
-                message: "Usuario deleteado.",
+                message: "Usuario Eliminado correctamente",
                 id_User
             }
         )

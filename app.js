@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require("cors");
 const morgan = require("morgan");
 const path = require("path");
-
+require("dotenv").config();
 
 // Conexión a la base de datos
 const connectDB = require('./src/db/connection');
@@ -31,6 +31,7 @@ app.use(express.json());
 
 app.use(require("./src/routes/user.routes"));//ruta de usuarios
 app.use(require("./src/routes/tasks.routes"));//ruta de tareas
+app.use(require("./src/routes/auth.routes"));//ruta de autenticacion
 
 
 
