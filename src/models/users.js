@@ -30,14 +30,6 @@ const UserSchema = new Schema({
 },{
     versionKey:false,
 })
-//requerimos el modelo y lo importamos a un objeto
-/* UserSchema.methods.toJSON = function() {
-    const { password, _id, ...user } = this.toObject();
-    user.uid = _id;
-
-    return user;
-}
- */
 
 
 module.exports = model("Users", UserSchema)

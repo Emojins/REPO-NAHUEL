@@ -1,19 +1,16 @@
 const { response, request } = require('express');
 const jwt = require('jsonwebtoken');
-const Usuario = require('../models/user');
+const Usuario = require('../models/users');
 
 const validarJWT = async (req = request, res = response, next) => {
 
-    let token = req.headers.authorization;
+    let token = req.headers.token;
 
     if (!token) {
         return res.status(401).json({
             msg: 'No hay token en la petición'
         })
     }; 
-    
-    // Se formatea el token 
-    //token = token.replace("Bearer ", ""); //armamos la cadena del token bearear
     
 
     try {
@@ -43,8 +40,7 @@ const validarJWT = async (req = request, res = response, next) => {
         
         next();
     } catch (error) {
-        console.log(error);
-        res.status(401).json({
+        res.json({
             msg: 'Token no válido'
         })
     }

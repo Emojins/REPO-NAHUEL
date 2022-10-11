@@ -1,17 +1,18 @@
-const { getTasks, postTask, putTask, deleteTask } = require('../controllers/task');
+const { getTasks, postTask, putTask, deleteTask, getTasksByUser } = require('../controllers/task');
 
 
 const TaskRouter = require('express').Router();
-
-
+const validarJWT = require("../middlewares/validarJWT")
 
 TaskRouter.get('/task', getTasks);
 
-TaskRouter.post('/task', postTask);
+TaskRouter.get('/task/:userId', getTasksByUser);
 
-TaskRouter.put('/task/:idTask', putTask);
+TaskRouter.post('/task', validarJWT, postTask);
 
-TaskRouter.delete('/task/:idTask', deleteTask)
+TaskRouter.put('/task/:idTask', validarJWT, putTask);
+
+TaskRouter.delete('/task/:idTask', validarJWT, deleteTask)
 
 
 

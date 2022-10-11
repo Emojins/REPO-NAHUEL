@@ -1,6 +1,5 @@
 // Importamos el modelo
 const TaskModel = require('../models/tasks');
-
 // Inicializamos el objeto CtrlTask
 const ctrlTask = {};
 
@@ -14,14 +13,28 @@ ctrlTask.getTasks = async (req, res) => {
         }
     )
 }
-ctrlTask.postTask = async (req, res) => {
-    const {title, description, isActive} = req.body;
+ctrlTask.getTasksByUser = async (req,res)=>{
+    try {
+        const id = req.params.userId;
+        console.log(req.params)
+        const tasksUser = await TaskModel.find({userId:id}, {description: 0})
+        return res.json(tasksUser)
+    } catch (error) {
+        console.log(error)
+        return res.json({
+            msg: 'Error en la obtención de tareas'
+        })
+    }
+}
 
+ctrlTask.postTask = async (req, res) => {
+    const {title, description, isActive, userId} = req.body;
     const newTask = new TaskModel(
         {
             title,
             description,
-            isActive
+            isActive,
+            userId
         }
     );
 

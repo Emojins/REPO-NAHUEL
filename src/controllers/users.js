@@ -3,7 +3,6 @@
 const User = require("../models/users");
 //importamos el paquete bcrypt
 const bcrypt = require('bcrypt');
-const token = require("../helpers/generarJWT").uid
 // iniciamos el controlador user como object
 const CtrlUser = {};
 
@@ -29,14 +28,10 @@ CtrlUser.postUser = async (req, res) => {
         edad,
         email
     });
-
-
     const user = await newUser.save();
-
     return res.json({
         message: "Usuario creado correctamente.",
-        user,
-        token
+        user
     })
 }
 
