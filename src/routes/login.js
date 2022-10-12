@@ -1,4 +1,4 @@
-const { iniciarSesion } = require('../controllers/auth');
+const { iniciarSesion } = require('../controllers/login');
 
 const router = require('express').Router();
 

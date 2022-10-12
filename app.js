@@ -31,7 +31,7 @@ app.use(express.json());
 
 app.use(require("./src/routes/user.routes"));//ruta de usuarios
 app.use(require("./src/routes/tasks.routes"));//ruta de tareas
-app.use(require("./src/routes/auth.routes"));//ruta de autenticacion
+app.use(require("./src/routes/login"));//ruta de login
 
 
 

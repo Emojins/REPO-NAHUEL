@@ -31,5 +31,4 @@ const UserSchema = new Schema({
     versionKey:false,
 })
 
-
 module.exports = model("Users", UserSchema)

@@ -4,9 +4,9 @@ const { getTasks, postTask, putTask, deleteTask, getTasksByUser } = require('../
 const TaskRouter = require('express').Router();
 const validarJWT = require("../middlewares/validarJWT")
 
-TaskRouter.get('/task', getTasks);
+TaskRouter.get('/task', validarJWT, getTasks);
 
-TaskRouter.get('/task/:userId', getTasksByUser);
+TaskRouter.get('/task/:userId', validarJWT, getTasksByUser);
 
 TaskRouter.post('/task', validarJWT, postTask);
 
